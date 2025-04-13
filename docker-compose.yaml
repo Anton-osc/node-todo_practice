@@ -1,0 +1,12 @@
+services:
+  db: 
+    image: mongo:latest
+    container_name: mongodb
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.node_app
+    container_name: app
+    ports:
+      - 8080:8080
+    restart: always
