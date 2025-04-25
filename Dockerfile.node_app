@@ -1,12 +1,12 @@
 FROM node:8.11.1
 
-WORKDIR /app
+WORKDIR /todo
 
-COPY package.json /app
+COPY package.json /todo
 
 RUN ["npm", "install"]
 
-COPY . /app
+COPY . /todo
 
 EXPOSE 8080
 
