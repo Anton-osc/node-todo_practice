@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "todo-app.fullname" . }}-deployment
+  labels:
+    app: {{- include "todo.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.todo.replicaCount}}
+  selector:
+    matchLabels:
+      app: {{ .Values.todo.labels.app }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.todo.labels.app }}
+    spec:
+      containers:
+      - name: {{ .Values.todo.labels.app }}
+        image: "{{ .Values.todo.image.repository }}:{{ .Values.todo.image.tag }}"
+        imagePullPolicy: {{ .Values.todo.image.pullPolicy }}
+        ports: 
+        - containerPort: {{ .Values.todo.containerPort }}
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.todo.livenessProbe.path }}
+            port: {{ .Values.todo.livenessProbe.port }}
+          initialDelaySeconds: {{ .Values.todo.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.todo.livenessProbe.periodSeconds }}

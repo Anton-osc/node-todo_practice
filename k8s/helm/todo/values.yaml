@@ -1,0 +1,49 @@
+todo:
+  labels:
+    app: todo
+  replicaCount: 3
+  image:
+    repository: ant115ondzi/node-todo_practice
+    tag: latest
+    pullPolicy: Always
+  containerPort: 8080
+  livenessProbe:
+    path: /
+    port: 8080
+    initialDelaySeconds: 10
+    periodSeconds: 3
+todoService:
+  labels: 
+    app: todo
+  ports:
+    port: 80
+    targetPort: 8080
+mongodb:
+  labels:
+    app: mongodb
+  replicas: 1
+  image: 
+    repository: mongo
+    tag: latest
+  ports:
+    containerPort: 27017
+  mountPath: /data/db
+  volumeClaim:
+    name: mongodb-data
+    accessModes: ["ReadWriteOnce"]
+    resources:
+      storage: 1Gi
+mongodbService:
+  labels:
+    app: mongodb
+  ports:
+    port: 27017
+ingress:
+  rewriteTarget: /
+  className: nginx
+  rules: 
+    http:
+      path: /
+      backend:
+        service:
+          port: 80
