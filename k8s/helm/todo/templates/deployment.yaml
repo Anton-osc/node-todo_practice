@@ -26,3 +26,8 @@ spec:
             port: {{ .Values.todo.livenessProbe.port }}
           initialDelaySeconds: {{ .Values.todo.livenessProbe.initialDelaySeconds }}
           periodSeconds: {{ .Values.todo.livenessProbe.periodSeconds }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: {{ .Values.todo.strategy.rollingUpdate.maxUnavailable }}
+      maxSurge: {{ .Values.todo.strategy.rollingUpdate.maxSurge }}

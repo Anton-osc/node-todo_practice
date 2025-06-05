@@ -1,7 +1,7 @@
 todo:
   labels:
     app: todo
-  replicaCount: 3
+  replicaCount: 2
   image:
     repository: ant115ondzi/node-todo_practice
     tag: latest
@@ -12,6 +12,10 @@ todo:
     port: 8080
     initialDelaySeconds: 10
     periodSeconds: 3
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0%
+      maxSurge: 100%
 todoService:
   labels: 
     app: todo
